@@ -3,7 +3,7 @@
 
 prompt:	.asciz "Enter integers with a space between each: "
 scan:	.asciz "%u %u %u"
-output:	.asciz "%d + %d + %d ="
+output:	.asciz "%d + %d + %d = "
 result: .asciz "%d"
 .data
 x:	.word 0
