@@ -1,8 +1,5 @@
 #include <stdio.h>
 #include <wiringPi.h>
-void cross(int pin);
-void sblink(int pin, int time);
-void sgoLight();
 
 #define RED_LED 16
 #define GREEN_LED 21
@@ -15,9 +12,8 @@ void sgoLight();
 #define RED_LED_STOP_TWO 12
 #define GREEN_LED_STOP_TWO 25
 #define BUTTON_TWO 17
-extern "C" void blink_start();
-extern "C" void goLight(int a, int b);
-
+extern "C" void blink_start(int a, int b);
+extern "C" void cross(int a, int b);
 int main(){
 	wiringPiSetupGpio();
 	
@@ -31,53 +27,24 @@ int main(){
 
 	pinMode(RED_LED_STOP_TWO, OUTPUT);
 	pinMode(GREEN_LED_STOP_TWO, OUTPUT);
-	pinMode(BUTTON_TWO, INPUT);	
+	pinMode(BUTTON_TWO, INPUT);
+
+	digitalWrite(RED_LED, LOW);
+	digitalWrite(RED_LED_STOP_TWO, LOW);	
 	while(1){
 		digitalWrite(GREEN_LED, HIGH);
+		digitalWrite(RED_LED_STOP_ONE, HIGH);
+		digitalWrite(RED_LED_STOP_TWO, HIGH);
 
 		if(digitalRead(BUTTON_ONE) == HIGH){
-			sblink(RED_LED_STOP_ONE, 5);
-			
-
+			cross(GREEN_LED_STOP_ONE, RED_LED_STOP_ONE);	
 		}
 
 		if(digitalRead(BUTTON_TWO) == HIGH){
-			sblink(RED_LED_STOP_TWO, 5);	
+			cross(GREEN_LED_STOP_TWO, RED_LED_STOP_TWO);	
 		}
 	}
 	
 
 }
-void cross(int red,int green){
 
-}
-
-void sgoLight(){
-	digitalWrite(12, LOW);
-	sblink(12, 13);
-	delay(1000);
-	sblink(21, 13);
-	digitalWrite(21, LOW);
-
-}
-
-void sblink(int pin, int time){
-	for(int i = 0; i <= time; i++){
-		digitalWrite(pin, LOW);
-		digitalWrite(GREEN_LED, LOW);
-		delay(100);
-		digitalWrite(pin, HIGH);
-		digitalWrite(GREEN_LED, HIGH);
-		delay(100);
-	}
-
-	digitalWrite(GREEN_LED, LOW);
-	digitalWrite(pin, LOW);
-	digitalWrite(RED_LED, HIGH);
-	delay(5000);
-	digitalWrite(YELLOW_LED, HIGH);
-	delay(5000);
-	digitalWrite(RED_LED, LOW);
-	digitalWrite(YELLOW_LED, LOW);
-	digitalWrite(GREEN_LED, HIGH);
-}
