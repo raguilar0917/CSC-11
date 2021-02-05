@@ -1,5 +1,6 @@
 .global encrypt
 .global decrypt
+/***/
 
 .text
 .align 4
